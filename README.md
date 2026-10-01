@@ -25,37 +25,37 @@ Your Linux system must have the following packages installed:
 
 ## Installation Debian / Ubuntu
 
-Install the required dependencies:
+- Install the required dependencies:
 
 ```sudo apt install bluez gnome-bluetooth-sendto wl-clipboard xclip```
 
 
-Download bdrop to /usr/local/bin:
+- Download bdrop to /usr/local/bin:
 
 ```sudo wget -O /usr/local/bin/bdrop https://github.com/DavidURM/bdrop/-/raw/main/bdrop```
 
 (Or any other directory)
 
-Make it executable:
+- Make it executable:
 
 ```sudo chmod +x /usr/local/bin/bdrop```
 
 (Or any other directory)
 
-Usage
+- Usage
 
-Run:
+- Run in your terminal:
 
 ```bdrop```
 
 
 On the first run, bdrop will guide you through the initial setup.
 
-Initial setup
+- Initial setup
 
 An initial Bluetooth pairing is required so bdrop can determine the receiver's Bluetooth address.
 
-You can either:
+- You can either:
 
 Pair the devices using your system's Bluetooth settings and let bdrop detect the receiver.
 
@@ -65,7 +65,7 @@ Once the setup is complete, press Enter and you're ready to use bdrop.
 
 Change the Bluetooth device
 
-If you need to change the receiver's Bluetooth address later, use the configuration command:
+- If you need to change the receiver's Bluetooth address later, use the config command:
 
 ```bdrop config```
 
@@ -74,7 +74,7 @@ Follow the prompts to update the configured Bluetooth device.
 
 # Roadmap
 
-- ** Planned for a future release:**
+- **Planned for a future release:**
 
 ## Pair and store multiple Bluetooth devices.
 
