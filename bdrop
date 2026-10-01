@@ -1,0 +1,106 @@
+#!/bin/bash
+
+CONFIG_FILE="$HOME/.bdrop_config"
+
+# 1. Load configuration if it exists
+if [ -f "$CONFIG_FILE" ]; then
+    source "$CONFIG_FILE"
+fi
+
+run_setup() {
+    echo "No Bluetooth address configured. Checking for paired devices..."
+    
+    # Power on just in case
+    bluetoothctl power on >/dev/null 2>&1
+    sleep 1
+
+    # Check for already paired devices
+    paired_line=$(bluetoothctl devices Paired | head -n 1)
+
+    if [ -z "$paired_line" ]; then
+        echo "--> No paired devices found."
+        echo "--> Please open your system's graphical Bluetooth settings and pair your tablet."
+        while true; do
+            read -p "Press [ENTER] when you have successfully paired the tablet..."
+            paired_line=$(bluetoothctl devices Paired | head -n 1)
+            if [ -n "$paired_line" ]; then
+                break
+            fi
+            echo "Still no paired devices found. Please try again."
+        done
+    fi
+
+    detected_mac=$(echo "$paired_line" | awk '{print $2}')
+    detected_name=$(echo "$paired_line" | cut -d' ' -f3-)
+
+    read -p "Found paired device: $detected_name ($detected_mac). Is this the right MAC address? [Press ENTER for Yes, or type a new MAC manually]: " user_input
+
+    # If user presses Enter (empty input) or types Y, use the detected MAC
+    if [ -z "$user_input" ] || [[ "$user_input" =~ ^[Yy]$ ]]; then
+        new_mac="$detected_mac"
+    else
+        new_mac="$user_input"
+    fi
+
+    echo "MAC=\"$new_mac\"" > "$CONFIG_FILE"
+    echo "Saved configuration."
+    MAC="$new_mac"
+}
+
+# 2. Force config mode if requested
+if [ "$1" == "config" ]; then
+    rm -f "$CONFIG_FILE" # Force a fresh setup
+    run_setup
+    exit 0
+fi
+
+# 3. Setup if no MAC is found
+if [ -z "$MAC" ]; then
+    run_setup
+fi
+
+# 4. Extract clipboard contents safely
+if command -v wl-paste > /dev/null 2>&1 && [ -n "$WAYLAND_DISPLAY" ]; then
+    if wl-paste --list-types 2>/dev/null | grep -q "image/png"; then
+        FILE="/tmp/screenshot.png"
+        wl-paste -t image/png > "$FILE" || { echo "Error: Failed to read image from Wayland clipboard."; exit 1; }
+    else
+        FILE="/tmp/clipboard.txt"
+        wl-paste > "$FILE" || { echo "Error: Failed to read text from Wayland clipboard."; exit 1; }
+    fi
+elif command -v xclip > /dev/null 2>&1; then
+    if xclip -selection clipboard -t TARGETS -o 2>/dev/null | grep -q "image/png"; then
+        FILE="/tmp/screenshot.png"
+        xclip -selection clipboard -t image/png -o > "$FILE" || { echo "Error: Failed to read image from X11 clipboard."; exit 1; }
+    else
+        FILE="/tmp/clipboard.txt"
+        xclip -selection clipboard -o > "$FILE" || { echo "Error: Failed to read text from X11 clipboard."; exit 1; }
+    fi
+else
+    echo "Error: Missing clipboard tools (wl-clipboard or xclip)."
+    echo "To install packages: sudo apt install bluez-tools xclip wl-clipboard "
+    exit 1
+fi
+
+if [ ! -s "$FILE" ]; then
+    echo "Error: Clipboard is empty or unreadable."
+    exit 1
+fi
+
+# 5. Turn on Bluetooth and initiate transfer
+echo "Powering on Bluetooth..."
+bluetoothctl power on >/dev/null 2>&1 || { echo "Error: Failed to enable Bluetooth."; exit 1; }
+sleep 1
+
+echo "Sending $FILE to $MAC..."
+# Redirecting both stdout and stderr completely silences GTK and Bluetooth-CRITICAL errors
+bluetooth-sendto --device="$MAC" "$FILE" > /dev/null 2>&1 || { echo "Error: Bluetooth transfer failed to launch."; exit 1; }
+
+# 6. Cleanup stale connection safely
+echo "--> Transfer initiated. Please accept the file on your tablet."
+read -p "--> Press [ENTER] only AFTER the transfer finishes to remove the stale connection..."
+
+echo "Removing stale connection for $MAC..."
+bluetoothctl remove "$MAC" >/dev/null 2>&1
+
+echo "Done."
