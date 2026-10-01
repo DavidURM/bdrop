@@ -35,7 +35,7 @@ Your Linux system must have the following packages installed:
 
 - Download bdrop to /usr/local/bin:
 
-```sudo wget -O /usr/local/bin/bdrop https://github.com/DavidURM/bdrop/-/raw/main/bdrop```
+```sudo wget -O /usr/local/bin/bdrop https://raw.githubusercontent.com/DavidURM/bdrop/main/bdrop && sudo chmod +x /usr/local/bin/bdrop```
 
 (Or any other directory)
 
