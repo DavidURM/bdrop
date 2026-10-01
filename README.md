@@ -31,8 +31,9 @@ sudo apt install bluez gnome-bluetooth-sendto wl-clipboard xclip
 
 Download bdrop to /usr/local/bin:
 
-sudo wget -O /usr/local/bin/bdrop https://gitlab.com/DavidURM/bdrop/-/raw/main/bdrop
+sudo wget -O /usr/local/bin/bdrop https://github.com/DavidURM/bdrop/-/raw/main/bdrop
 
+(Or any other directory)
 
 Make it executable:
 
