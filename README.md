@@ -75,3 +75,7 @@ Planned for a future release:
 Pair and store multiple Bluetooth devices.
 
 Choose the destination device when running bdrop.
+
+Enable VPN filesharing.
+
+Add a VPN feature for sending to a "home" device.
