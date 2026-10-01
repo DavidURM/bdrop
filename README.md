@@ -1,5 +1,5 @@
 # bdrop
-This program is an offline ["airdrop"](https://support.apple.com/en-us/102641) or [Microsoft Link](https://www.microsoft.com/en-us/windows/sync-across-your-devices) implementation using bluetooth. It is made in the inspiration of [LocalSend](https://localsend.org/) to optimize workflow and allow a one-way filesharing session for sending notes to your device. A simple command line program that uses xclip and gracefully initiates a file drop session with your device of choice written in bash and runnable in your command line.
+This program is an offline ["airdrop"](https://support.apple.com/en-us/102641) or [Microsoft Link](https://www.microsoft.com/en-us/windows/sync-across-your-devices) implementation using bluetooth. It is made in the inspiration of [LocalSend](https://localsend.org/) to optimize workflow and allow a one-way filesharing session for sending notes to your device. A simple command line program that uses xclip and gracefully initiates a file drop session with whatever is currently in your clipboard for your device of choice. Written in bash and runnable in your command line.
 
 - Are you tired of having O(denied) search time for LocalSend or any other HTTP file-sharing implementation on eduRoam (or any network whith strict WI-FI AP isolation) ?
 
@@ -23,29 +23,30 @@ Your Linux system must have the following packages installed:
 * `gnome-bluetooth-sendto` (Native GNOME Bluetooth transfer UI)
 * `wl-clipboard` (If using Wayland) OR `xclip` (If using X11)
 
-## Installation
-Debian / Ubuntu
+## Installation Debian / Ubuntu
 
 Install the required dependencies:
 
-sudo apt install bluez gnome-bluetooth-sendto wl-clipboard xclip
+```sudo apt install bluez gnome-bluetooth-sendto wl-clipboard xclip```
 
 
 Download bdrop to /usr/local/bin:
 
-sudo wget -O /usr/local/bin/bdrop https://github.com/DavidURM/bdrop/-/raw/main/bdrop
+```sudo wget -O /usr/local/bin/bdrop https://github.com/DavidURM/bdrop/-/raw/main/bdrop```
 
 (Or any other directory)
 
 Make it executable:
 
-sudo chmod +x /usr/local/bin/bdrop
+```sudo chmod +x /usr/local/bin/bdrop```
+
+(Or any other directory)
 
 Usage
 
 Run:
 
-bdrop
+```bdrop```
 
 
 On the first run, bdrop will guide you through the initial setup.
@@ -66,19 +67,23 @@ Change the Bluetooth device
 
 If you need to change the receiver's Bluetooth address later, use the configuration command:
 
-bdrop config
+```bdrop config```
 
 
 Follow the prompts to update the configured Bluetooth device.
 
-Roadmap
+# Roadmap
 
-Planned for a future release:
+- ** Planned for a future release:**
 
-Pair and store multiple Bluetooth devices.
+## Pair and store multiple Bluetooth devices.
 
 Choose the destination device when running bdrop.
 
-Enable VPN filesharing.
+## Enable VPN filesharing.
 
 Add a VPN feature for sending to a "home" device.
+
+## Key-board bindability
+
+Enable to directly bind to your screenshot shortcut on your machine
