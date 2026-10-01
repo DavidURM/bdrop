@@ -89,3 +89,7 @@ Add a VPN feature for sending to a "home" device.
 ## Key-board bindability
 
 Enable to directly bind to your screenshot shortcut on your machine
+
+## MacOs - Other devices
+
+Enable bypassing the airdrop completely if you choose a non-Mac device. Currently tested for Linux -> Device
