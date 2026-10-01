@@ -1,6 +1,8 @@
 # bdrop
 This program is an offline ["airdrop"](https://support.apple.com/en-us/102641) or [Microsoft Link](https://www.microsoft.com/en-us/windows/sync-across-your-devices) implementation using bluetooth. It is made in the inspiration of [LocalSend](https://localsend.org/) to optimize workflow and allow a one-way filesharing session for sending notes to your device. A simple command line program that uses xclip and gracefully initiates a file drop session with whatever is currently in your clipboard for your device of choice. Written in bash and runnable in your command line.
 
+## Why?
+
 - Are you tired of having O(denied) search time for LocalSend or any other HTTP file-sharing implementation on eduRoam (or any network whith strict WI-FI AP isolation) ?
 
 - Do you want to just simply send a screenshot to your tablet without having to worry if your screenshot ends up in an LLM dataset?
