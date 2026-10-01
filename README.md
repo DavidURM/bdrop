@@ -24,12 +24,13 @@ Your Linux system must have the following packages installed:
 * `bluez` (Provides `bluetoothctl`)
 * `gnome-bluetooth-sendto` (Native GNOME Bluetooth transfer UI)
 * `wl-clipboard` (If using Wayland) OR `xclip` (If using X11)
+* `imagemagick` For optimization and image compression
 
 ## Installation Debian / Ubuntu
 
 - Install the required dependencies:
 
-```sudo apt install bluez gnome-bluetooth-sendto wl-clipboard xclip```
+```sudo apt install bluez gnome-bluetooth-sendto wl-clipboard xclip imagemagick```
 
 
 - Download bdrop to /usr/local/bin:

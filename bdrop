@@ -63,6 +63,10 @@ fi
 if command -v wl-paste > /dev/null 2>&1 && [ -n "$WAYLAND_DISPLAY" ]; then
     if wl-paste --list-types 2>/dev/null | grep -q "image/png"; then
         FILE="/tmp/screenshot.png"
+        if [ -f "$FILE" ] && [[ "$FILE" == *.png ]]; then
+        # Compress image to speed up Bluetooth transfer
+        convert "$FILE" -resize 1280x -quality 85 "$FILE"
+fi
         wl-paste -t image/png > "$FILE" || { echo "Error: Failed to read image from Wayland clipboard."; exit 1; }
     else
         FILE="/tmp/clipboard.txt"
