@@ -72,7 +72,7 @@ Change the Bluetooth device
 
 Follow the prompts to update the configured Bluetooth device.
 
-# Roadmap Planned for a future release:**
+# Roadmap Planned for a future release:
 
 
 
